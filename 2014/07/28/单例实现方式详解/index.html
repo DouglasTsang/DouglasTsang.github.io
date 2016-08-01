@@ -103,7 +103,7 @@
         </hgroup>
 
         
-        <p class="header-subtitle">好好学习,天天向上</p>
+        <p class="header-subtitle">专注于iOS</p>
         
 
         
@@ -138,13 +138,13 @@
                 <div class="tips-box hide">
                     <div class="tips-arrow"></div>
                     <ul class="tips-inner">
-                        <li>菜单</li>
-                        <li>标签</li>
+                        <li>Menu</li>
+                        <li>Tags</li>
                         
-                        <li>友情链接</li>
+                        <li>Friends</li>
                         
                         
-                        <li>关于我</li>
+                        <li>About Me</li>
                         
                     </ul>
                 </div>
@@ -229,7 +229,7 @@
               <h1 class="header-author"><a href="/" title="回到主页">DouglasTsang</a></h1>
             </hgroup>
             
-            <p class="header-subtitle">好好学习,天天向上</p>
+            <p class="header-subtitle">专注于iOS</p>
             
             <nav class="header-menu">
                 <ul>
@@ -258,7 +258,7 @@
             </nav>
         </header>                
     </div>
-    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
 </nav>
       <div class="body-wrap"><article id="post-单例实现方式详解" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -326,7 +326,7 @@
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//YYTools.h</span></div><div class="line"><span class="meta">#import <span class="meta-string">&lt;Foundation/Foundation.h&gt;</span></span></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">YYTools</span> : <span class="title">NSObject</span></span></div><div class="line">+ (<span class="keyword">instancetype</span>)sharedTools;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//YYTools.m</span></div><div class="line"><span class="meta">#import <span class="meta-string">"YYTools.h"</span></span></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">YYTools</span></span></div><div class="line"><span class="keyword">static</span> <span class="keyword">id</span> singleton;</div><div class="line">+ (<span class="keyword">instancetype</span>)sharedTools&#123;</div><div class="line">    <span class="keyword">static</span> <span class="built_in">dispatch_once_t</span> onceToken;</div><div class="line">    <span class="built_in">dispatch_once</span>(&amp;onceToken, ^&#123;</div><div class="line">        singleton = [[<span class="keyword">self</span> alloc]init];</div><div class="line">    &#125;);</div><div class="line">    <span class="keyword">return</span> singleton;</div><div class="line">&#125;</div><div class="line">+ (<span class="keyword">instancetype</span>)allocWithZone:(<span class="keyword">struct</span> _NSZone *)zone</div><div class="line">&#123;</div><div class="line">    <span class="keyword">static</span> <span class="built_in">dispatch_once_t</span> onceToken;</div><div class="line">    <span class="built_in">dispatch_once</span>(&amp;onceToken, ^&#123;</div><div class="line">        singleton = [<span class="keyword">super</span> allocWithZone:zone];</div><div class="line">    &#125;);</div><div class="line">    <span class="keyword">return</span> singleton;</div><div class="line">&#125;</div><div class="line">- (<span class="keyword">id</span>)copyWithZone:(<span class="built_in">NSZone</span> *)zone</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> singleton;</div><div class="line">&#125;</div><div class="line"><span class="comment">//</span></div><div class="line"><span class="meta">#pragma -mark 以下MRC模式下按需添加</span></div><div class="line">- (<span class="keyword">instancetype</span>)autorelease</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> singleton;</div><div class="line">&#125;</div><div class="line">- (<span class="keyword">instancetype</span>)<span class="keyword">retain</span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> singleton;</div><div class="line">&#125;</div><div class="line">- (<span class="keyword">oneway</span> <span class="keyword">void</span>)release</div><div class="line">&#123;</div><div class="line">    <span class="comment">//release时不做任何操作</span></div><div class="line">&#125;</div><div class="line">- (<span class="built_in">NSUInteger</span>)retainCount</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">&#125;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
 <p>以上代码已经可以很容易的CV了，仅仅需要改变shared方法的类名即可用到各种使用单例模式的类中。如果你是和我一样懒的程序员，那么还可以更进一步，将以上代码抽取成MRC和ARC都可以用的宏，根据<code>#if __has_feature(objc_arc)</code>判断当前是MRC还是ARC。<br>宏定义如下：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//singleton.h</span></div><div class="line"><span class="meta">#define singleton_h(className) + (instancetype)shared##className;</span></div><div class="line"></div><div class="line"><span class="meta">#if __has_feature(objc_arc)</span></div><div class="line"><span class="meta">#define singleton_m(className) \</span></div><div class="line">\</div><div class="line"><span class="keyword">static</span> <span class="keyword">id</span> singleton;\</div><div class="line">\</div><div class="line">+ (<span class="keyword">instancetype</span>)shared<span class="meta">##className&#123;\</span></div><div class="line">\</div><div class="line">    <span class="keyword">static</span> <span class="built_in">dispatch_once_t</span> onceToken;\</div><div class="line">    <span class="built_in">dispatch_once</span>(&amp;onceToken, ^&#123;\</div><div class="line">        singleton = [[YYTools alloc]init];</div><div class="line">    &#125;);\</div><div class="line">\</div><div class="line">    <span class="keyword">return</span> singleton;\</div><div class="line">&#125;\</div><div class="line">\</div><div class="line">+ (<span class="keyword">instancetype</span>)allocWithZone:(<span class="keyword">struct</span> _NSZone *)zone\</div><div class="line">&#123;\</div><div class="line">    <span class="keyword">static</span> <span class="built_in">dispatch_once_t</span> onceToken;\</div><div class="line">    <span class="built_in">dispatch_once</span>(&amp;onceToken, ^&#123;\</div><div class="line">        singleton = [<span class="keyword">super</span> allocWithZone:zone];\</div><div class="line">    &#125;);\</div><div class="line">    <span class="keyword">return</span> singleton;\</div><div class="line">&#125;\</div><div class="line">\</div><div class="line">- (<span class="keyword">id</span>)copyWithZone:(<span class="built_in">NSZone</span> *)zone\</div><div class="line">&#123;\</div><div class="line">    <span class="keyword">return</span> singleton;\</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">#else</span></div><div class="line"><span class="meta">#define singleton_m(className) \</span></div><div class="line">\</div><div class="line"><span class="keyword">static</span> <span class="keyword">id</span> singleton;\</div><div class="line">\</div><div class="line">+ (<span class="keyword">instancetype</span>)shared<span class="meta">##className&#123;\</span></div><div class="line">\</div><div class="line"><span class="keyword">static</span> <span class="built_in">dispatch_once_t</span> onceToken;\</div><div class="line"><span class="built_in">dispatch_once</span>(&amp;onceToken, ^&#123;\</div><div class="line">    singleton = [[<span class="keyword">self</span> alloc]init];\</div><div class="line">&#125;);\</div><div class="line">\</div><div class="line"><span class="keyword">return</span> singleton;\</div><div class="line">&#125;\</div><div class="line">\</div><div class="line">+ (<span class="keyword">instancetype</span>)allocWithZone:(<span class="keyword">struct</span> _NSZone *)zone\</div><div class="line">&#123;\</div><div class="line"><span class="keyword">static</span> <span class="built_in">dispatch_once_t</span> onceToken;\</div><div class="line"><span class="built_in">dispatch_once</span>(&amp;onceToken, ^&#123;\</div><div class="line">singleton = [<span class="keyword">super</span> allocWithZone:zone];\</div><div class="line">&#125;);\</div><div class="line"><span class="keyword">return</span> singleton;\</div><div class="line">&#125;\</div><div class="line">\</div><div class="line">- (<span class="keyword">id</span>)copyWithZone:(<span class="built_in">NSZone</span> *)zone\</div><div class="line">&#123;\</div><div class="line"><span class="keyword">return</span> singleton;\</div><div class="line">&#125;\</div><div class="line">\</div><div class="line">- (<span class="keyword">instancetype</span>)autorelease\</div><div class="line">&#123;\</div><div class="line">    <span class="keyword">return</span> singleton;\</div><div class="line">&#125;\</div><div class="line">\</div><div class="line">- (<span class="keyword">instancetype</span>)<span class="keyword">retain</span>\</div><div class="line">&#123;\</div><div class="line">    <span class="keyword">return</span> singleton;\</div><div class="line">&#125;\</div><div class="line">\</div><div class="line">- (<span class="keyword">oneway</span> <span class="keyword">void</span>)release\</div><div class="line">&#123;\</div><div class="line">    \</div><div class="line">&#125;\</div><div class="line">\</div><div class="line">- (<span class="built_in">NSUInteger</span>)retainCount\</div><div class="line">&#123;\</div><div class="line">    <span class="keyword">return</span> <span class="number">1</span>;\</div><div class="line">&#125;</div><div class="line"><span class="meta">#endif</span></div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//singleton.h</span></div><div class="line"><span class="meta">#define singleton_h(className) + (instancetype)shared##className;</span></div><div class="line"></div><div class="line"><span class="meta">#if __has_feature(objc_arc)</span></div><div class="line"><span class="meta">#define singleton_m(className) \</span></div><div class="line">\</div><div class="line"><span class="keyword">static</span> <span class="keyword">id</span> singleton;\</div><div class="line">\</div><div class="line">+ (<span class="keyword">instancetype</span>)shared<span class="meta">##className&#123;\</span></div><div class="line">\</div><div class="line">    <span class="keyword">static</span> <span class="built_in">dispatch_once_t</span> onceToken;\</div><div class="line">    <span class="built_in">dispatch_once</span>(&amp;onceToken, ^&#123;\</div><div class="line">        singleton = [[YYTools alloc]init];</div><div class="line">    &#125;);\</div><div class="line">\</div><div class="line">    <span class="keyword">return</span> singleton;\</div><div class="line">&#125;\</div><div class="line">\</div><div class="line">+ (<span class="keyword">instancetype</span>)allocWithZone:(<span class="keyword">struct</span> _NSZone *)zone\</div><div class="line">&#123;\</div><div class="line">    <span class="keyword">static</span> <span class="built_in">dispatch_once_t</span> onceToken;\</div><div class="line">    <span class="built_in">dispatch_once</span>(&amp;onceToken, ^&#123;\</div><div class="line">        singleton = [<span class="keyword">super</span> allocWithZone:zone];\</div><div class="line">    &#125;);\</div><div class="line">    <span class="keyword">return</span> singleton;\</div><div class="line">&#125;\</div><div class="line">\</div><div class="line">- (<span class="keyword">id</span>)copyWithZone:(<span class="built_in">NSZone</span> *)zone\</div><div class="line">&#123;\</div><div class="line">    <span class="keyword">return</span> singleton;\</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">#else</span></div><div class="line"><span class="meta">#define singleton_m(className) \</span></div><div class="line">\</div><div class="line"><span class="keyword">static</span> <span class="keyword">id</span> singleton;\</div><div class="line">\</div><div class="line">+ (<span class="keyword">instancetype</span>)shared<span class="meta">##className&#123;\</span></div><div class="line">\</div><div class="line"><span class="keyword">static</span> <span class="built_in">dispatch_once_t</span> onceToken;\</div><div class="line"><span class="built_in">dispatch_once</span>(&amp;onceToken, ^&#123;\</div><div class="line">    asingleton = [[<span class="keyword">self</span> alloc]init];\</div><div class="line">&#125;);\</div><div class="line">\</div><div class="line"><span class="keyword">return</span> singleton;\</div><div class="line">&#125;\</div><div class="line">\</div><div class="line">+ (<span class="keyword">instancetype</span>)allocWithZone:(<span class="keyword">struct</span> _NSZone *)zone\</div><div class="line">&#123;\</div><div class="line"><span class="keyword">static</span> <span class="built_in">dispatch_once_t</span> onceToken;\</div><div class="line"><span class="built_in">dispatch_once</span>(&amp;onceToken, ^&#123;\</div><div class="line">singleton = [<span class="keyword">super</span> allocWithZone:zone];\</div><div class="line">&#125;);\</div><div class="line"><span class="keyword">return</span> singleton;\</div><div class="line">&#125;\</div><div class="line">\</div><div class="line">- (<span class="keyword">id</span>)copyWithZone:(<span class="built_in">NSZone</span> *)zone\</div><div class="line">&#123;\</div><div class="line"><span class="keyword">return</span> singleton;\</div><div class="line">&#125;\</div><div class="line">\</div><div class="line">- (<span class="keyword">instancetype</span>)autorelease\</div><div class="line">&#123;\</div><div class="line">    <span class="keyword">return</span> singleton;\</div><div class="line">&#125;\</div><div class="line">\</div><div class="line">- (<span class="keyword">instancetype</span>)<span class="keyword">retain</span>\</div><div class="line">&#123;\</div><div class="line">    <span class="keyword">return</span> singleton;\</div><div class="line">&#125;\</div><div class="line">\</div><div class="line">- (<span class="keyword">oneway</span> <span class="keyword">void</span>)release\</div><div class="line">&#123;\</div><div class="line">    \</div><div class="line">&#125;\</div><div class="line">\</div><div class="line">- (<span class="built_in">NSUInteger</span>)retainCount\</div><div class="line">&#123;\</div><div class="line">    <span class="keyword">return</span> <span class="number">1</span>;\</div><div class="line">&#125;</div><div class="line"><span class="meta">#endif</span></div></pre></td></tr></table></figure>
 <p>这样当我们需要定义一个新的使用单例设计模式的类时，仅需要导入这个宏文件，再写上两句代码即可，并且不需要考虑是MRC还是ARC。</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//YYAudioTools.h</span></div><div class="line"><span class="meta">#import <span class="meta-string">"singleton.h"</span></span></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">YYAudioTools</span> : <span class="title">NSObject</span></span></div><div class="line">singleton_h(AudioTools);</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//YYAudioTools.m</span></div><div class="line"><span class="meta">#import <span class="meta-string">"YYAudioTools.h"</span></span></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">YYAudioTools</span></span></div><div class="line">singleton_m(AudioTools);</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
@@ -338,17 +338,17 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2014/07/28/单例实现方式详解/">单例实现方式详解</a></p>
-        <p><span>文章作者:</span><a href="/" title="回到主页">DouglasTsang</a></p>
-        <p><span>发布时间:</span>2014-07-28, 14:56:43</p>
-        <p><span>最后更新:</span>2014-07-28, 14:56:43</p>
+        <p><span>Title:</span><a href="/2014/07/28/单例实现方式详解/">单例实现方式详解</a></p>
+        <p><span>Author:</span><a href="/" title="Back to Homepage">DouglasTsang</a></p>
+        <p><span>Created:</span>2014-07-28, 14:56:43</p>
+        <p><span>Updated:</span>2014-07-28, 14:56:43</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2014/07/28/单例实现方式详解/" title="单例实现方式详解">http://www.douglastsang.com/2014/07/28/单例实现方式详解/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://www.douglastsang.com/2014/07/28/单例实现方式详解/　　作者: DouglasTsang" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>Full URL:</span><a class="post-url" href="/2014/07/28/单例实现方式详解/" title="单例实现方式详解">http://www.douglastsang.com/2014/07/28/单例实现方式详解/</a>
+            <span class="copy-path" data-clipboard-text="From http://www.douglastsang.com/2014/07/28/单例实现方式详解/　　By DouglasTsang" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
-            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
         </p>
     </div>
 
@@ -369,7 +369,7 @@
 </article>
 
     <div id="toc" class="toc-article">
-        <strong class="toc-title">文章目录</strong>
+        <strong class="toc-title">Contents</strong>
         
             <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#概述"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#简单实现方式"><span class="toc-number">2.</span> <span class="toc-text">简单实现方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#线程安全实现方式"><span class="toc-number">3.</span> <span class="toc-text">线程安全实现方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#非ARC下实现方式"><span class="toc-number">4.</span> <span class="toc-text">非ARC下实现方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#利用宏"><span class="toc-number">5.</span> <span class="toc-text">利用宏</span></a></li></ol>
         
@@ -385,10 +385,10 @@
         }
     </style>
 
-    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
 
     <script>
-        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+        yiliaConfig.toc = ["Hide", "Show", !!"false"];
     </script>
 
 
@@ -446,13 +446,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/" title="Back to Homepage"><i class="fa fa-home"></i></a>
         
 
-        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2013/12/03/hello-world -OC/" title="下一篇: Hello World">
+            <a href="/2013/12/03/hello-world -OC/" title="Next: Hello World">
                 <i class="fa fa-angle-right"></i>
             </a>
         
@@ -475,14 +475,14 @@
                 2013-2016 DouglasTsang
             </div>
             <div class="footer-right">
-                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
             </div>
         </div>
         
             <div class="visit">
                 
                     <span id="busuanzi_container_site_pv" style='display:none'>
-                        <span id="site-visit" >本站到访数: 
+                        <span id="site-visit" >Site Visitors: 
                             <span id="busuanzi_value_site_uv"></span>
                         </span>
                     </span>
@@ -492,7 +492,7 @@
                 
                 
                     <span id="busuanzi_container_page_pv" style='display:none'>
-                        <span id="page-visit">本页阅读量: 
+                        <span id="page-visit">Page Hits: 
                             <span id="busuanzi_value_page_pv"></span>
                         </span>
                     </span>
@@ -526,9 +526,9 @@
 
 
 <div class="scroll" id="scroll">
-    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
-    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
-    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
 </div>
 <script>
     // Open in New Window
