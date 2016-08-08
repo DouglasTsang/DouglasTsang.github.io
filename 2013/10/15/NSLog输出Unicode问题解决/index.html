@@ -21,13 +21,13 @@
 <meta property="og:url" content="http://www.douglastsang.com/2013/10/15/NSLog输出Unicode问题解决/index.html">
 <meta property="og:site_name" content="Douglas’s Blog">
 <meta property="og:description" content="OC中使用NSLog直接输出字典和数组，如果存在中文字符，会输出其Unicode编码，那么如何才能让他输出中文呢？">
-<meta property="og:image" content="http://obkifqqb2.bkt.clouddn.com/14706223777626.jpg">
-<meta property="og:image" content="http://obkifqqb2.bkt.clouddn.com/14706251214109.jpg">
+<meta property="og:image" content="http://obkifqqb2.bkt.clouddn.com/14706223777626.jpg?imageView2/2/w/300">
+<meta property="og:image" content="http://obkifqqb2.bkt.clouddn.com/14706251214109.jpg?imageView2/2/w/300">
 <meta property="og:updated_time" content="2013-10-15T02:03:22.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NSLog输出Unicode问题解决">
 <meta name="twitter:description" content="OC中使用NSLog直接输出字典和数组，如果存在中文字符，会输出其Unicode编码，那么如何才能让他输出中文呢？">
-<meta name="twitter:image" content="http://obkifqqb2.bkt.clouddn.com/14706223777626.jpg">
+<meta name="twitter:image" content="http://obkifqqb2.bkt.clouddn.com/14706223777626.jpg?imageView2/2/w/300">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -309,10 +309,10 @@
 <a id="more"></a>
 <p>定义一个简单的字典或数组，使用NSLog直接输出，如遇到中文，则会以Unicode编码的形式进行输出，如下：</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSDictionary</span> *dict = @&#123;</div><div class="line">    <span class="string">@"en"</span>:<span class="string">@"This is English"</span>,</div><div class="line">    <span class="string">@"cn"</span>:<span class="string">@"这是中文字符"</span>,</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,dict);</div></pre></td></tr></table></figure>
-<p>输出效果：<br><img src="http://obkifqqb2.bkt.clouddn.com/14706223777626.jpg" alt="-w312"></p>
+<p>输出效果：<br><img src="http://obkifqqb2.bkt.clouddn.com/14706223777626.jpg?imageView2/2/w/300" alt="-w312"></p>
 <p>这给数据调试带来很大不便，是否能够输出中文呢？我们知道，在使用<code>%@</code>打印对象时，会打印对象的<code>description</code>字符串属性，可以重写<code>- (NSString *)description</code>自定义输出格式。而打印数组和字典时，重写这个方法没有效果，因为NSLog打印的是<code>- (NSString *)descriptionWithLocale:(id)locale</code>这个方法返回的字符串，所以我们可以创建字典和数组的分类并重写这个方法，自行拼接想要的输出格式。</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">- (<span class="built_in">NSString</span> *)descriptionWithLocale:(<span class="keyword">id</span>)locale</div><div class="line">&#123;</div><div class="line">    <span class="comment">// 初始化可变字符串</span></div><div class="line">    <span class="built_in">NSMutableString</span> *stringM = [<span class="built_in">NSMutableString</span> string];</div><div class="line">    <span class="comment">// 开始拼接</span></div><div class="line">    [stringM appendString:<span class="string">@"&#123;\n"</span>];</div><div class="line">    <span class="comment">// 遍历元素拼接中间内容</span></div><div class="line">    [<span class="keyword">self</span> enumerateKeysAndObjectsUsingBlock:^(<span class="keyword">id</span>  _Nonnull key, <span class="keyword">id</span>  _Nonnull obj, <span class="built_in">BOOL</span> * _Nonnull stop) &#123;</div><div class="line">        [stringM appendFormat:<span class="string">@"\t%@ = %@;\n"</span>,key,obj];</div><div class="line">    &#125;];</div><div class="line">    <span class="comment">// 结束拼接</span></div><div class="line">    [stringM appendString:<span class="string">@"&#125;\n"</span>];</div><div class="line">    <span class="keyword">return</span> stringM;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>输出效果如下：<br><img src="http://obkifqqb2.bkt.clouddn.com/14706251214109.jpg" alt="-w274"></p>
+<p>输出效果如下：<br><img src="http://obkifqqb2.bkt.clouddn.com/14706251214109.jpg?imageView2/2/w/300" alt="-w274"></p>
 
       
     </div>
